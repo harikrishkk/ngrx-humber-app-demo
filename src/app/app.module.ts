@@ -11,6 +11,9 @@ import { booksReducer } from 'src/store/books/books.reducer';
 import { collectionReducer } from 'src/store/books/collection.reducer';
 import { BookCollectionComponent } from './book-collection/book-collection.component';
 import { HttpClientModule } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
+import { BookEffects } from 'src/store/books/books.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 
 @NgModule({
@@ -28,7 +31,11 @@ import { HttpClientModule } from '@angular/common/http';
       count: counterReducer,
       books: booksReducer,
       collection: collectionReducer
-    })
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+    }),
+    EffectsModule.forRoot([BookEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

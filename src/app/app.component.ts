@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { BooksActions, BooksApiActions } from 'src/store/books/books.actions';
 import { selectBookCollection, selectBooks } from 'src/store/books/books.selectors';
-import { GoogleBooksService } from './book-list/book-list.service';
 
 @Component({
   selector: 'app-root',
@@ -21,13 +20,9 @@ export class AppComponent {
     this.store.dispatch(BooksActions.removeBook({ bookId }));
   }
 
-  constructor(private booksService: GoogleBooksService, private store: Store) { }
+  constructor(private store: Store) { }
 
   ngOnInit() {
-    this.booksService
-      .getBooks()
-      .subscribe((books) =>
-        this.store.dispatch(BooksApiActions.retrievedBookList({ books }))
-      );
+    this.store.dispatch(BooksApiActions.getBookInit())
   }
 }
